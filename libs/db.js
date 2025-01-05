@@ -2,18 +2,15 @@ import { connect } from "mongoose";
 
 const connectDB = async () => {
   try {
-    const conn = await connect(
-      "mongodb+srv://nuradnanchowdhury015:oFJx0xd2xHprbvvL@travel-agency.ckkif.mongodb.net/",
-      {
-        dbName: "travel-agency",
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
-    );
-    console.log(`MongoDB Connected: ${conn.connections[0].host}`); // Correct way to log host
+    const conn = await connect(process.env.ATLAS_URI, {
+      dbName: process.env.DB_NAME,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`Error: ${error.message}`);
-    process.exit(1); // Exit process with failure
+    console.log(error.message);
+    process.exit(1);
   }
 };
 
